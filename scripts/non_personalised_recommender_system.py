@@ -125,6 +125,16 @@ for col in user_movie_matrix.columns:
     if col != 'sex':
         user_movie_matrix[col] = pd.to_numeric(user_movie_matrix[col], errors='coerce')
 
+
+# Check if 'sex' column exists
+if 'sex' in user_movie_matrix.columns:
+    print("Column 'sex' exists in the DataFrame.")
+else:
+    print("Column 'sex' does not exist in the DataFrame. Current columns are:", user_movie_matrix.columns)
+
+# Inspect the first few rows of the DataFrame
+print(user_movie_matrix.head())
+
 # Filter for male and female users
 df_m = user_movie_matrix[user_movie_matrix['sex'] == 'M']
 df_f = user_movie_matrix[user_movie_matrix['sex'] == 'F']
