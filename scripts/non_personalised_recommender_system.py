@@ -27,9 +27,7 @@ print(ratings.shape)
 # view the ratings data
 print(ratings.head())
 
-df_ratings = ratings[(ratings['user_id'] == 1)&(ratings['movie_id'] == 100)]
-
-print(df_ratings)
+ratings[(ratings['user_id'] == 1)&(ratings['movie_id'] == 100)]
 
 print(pd.isnull(ratings).sum())
 
@@ -92,25 +90,23 @@ print(user_movie_matrix)
 ratings = ratings.merge(users[['user_id','sex']], how = 'left', on = 'user_id')
 ratings = ratings[['user_id','sex','movie','rating']]
 
-print(ratings)
+print(ratings.columns)
 
 
 ## 4. Non Personalised Recommender Systems using average ratings
 
-df_nonreccomender_average = user_movie_matrix.mean(axis=0).sort_values(ascending=False).head(5)
-print(df_nonreccomender_average)
+user_movie_matrix.mean(axis=0).sort_values(ascending=False).head(5)
+
 
 ## 5. Non Personalised Recommender Systems using number of ratings or rating count 
 
-df_nonreccomender_count = user_movie_matrix.count(axis=0).sort_values(ascending=False).head(5)
+user_movie_matrix.count(axis=0).sort_values(ascending=False).head(5)
 
-print(df_nonreccomender_count)
 
 ## 6. Non Personalised Recommender Systems using count of ratings 4 and above 
 
-df_apply = user_movie_matrix.apply(pd.value_counts)
+user_movie_matrix.apply(pd.value_counts)
 
-print(df_apply)
 
 df_four = user_movie_matrix.apply(lambda x: x[x>=4]).count(axis=0) / user_movie_matrix.apply(lambda x: x).count(axis=0)
 df_four.sort_values(ascending = False).head(5)
@@ -135,34 +131,27 @@ else:
 # Inspect the first few rows of the DataFrame
 print(user_movie_matrix.head())
 
-# Filter for male and female users
+# # Filter for male and female users
 df_m = user_movie_matrix[user_movie_matrix['sex'] == 'M']
 df_f = user_movie_matrix[user_movie_matrix['sex'] == 'F']
 
 
 
-# Calculate 
-# Calculate mean, excluding 'sex' column
+# # Calculate 
+# # Calculate mean, excluding 'sex' column
 df_m_mean = df_m.drop(columns='sex').mean(axis=0).sort_values(ascending=False)
 df_f_mean = df_f.drop(columns='sex').mean(axis=0).sort_values(ascending=False)
 
 
-# Compute the difference
-dif_g = df_f_mean - df_m_mean
-dif_g_sorted = dif_g.sort_values(ascending=False)
-dif_g_sorted
+# # Compute the difference
+# dif_g = df_f_mean - df_m_mean
+# dif_g_sorted = dif_g.sort_values(ascending=False)
+# dif_g_sorted
 
-print(dif_g_sorted)
+# print(dif_g_sorted)
 
-# Check if 'sex' column exists
-if 'sex' in user_movie_matrix.columns:
-    print("Column 'sex' exists in the DataFrame.")
-else:
-    print("Column 'sex' does not exist in the DataFrame. Current columns are:", user_movie_matrix.columns)
-
-# Inspect the first few rows of the DataFrame
-print(user_movie_matrix.head())
-
+df_m_four = df_m.apply(lambda x: x[x>=4]).count(axis=0).sort_values(ascending=False) / df_m.apply(lambda x: x).count(axis=0)
+df_f_four = df_f.apply(lambda x: x[x>=4]).count(axis=0).sort_values(ascending=False) / df_f.apply(lambda x: x).count(axis=0)
 
 
 
