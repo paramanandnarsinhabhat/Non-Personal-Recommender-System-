@@ -131,6 +131,27 @@ df_f = user_movie_matrix[user_movie_matrix['sex'] == 'F']
 
 
 
+# Calculate 
+# Calculate mean, excluding 'sex' column
+df_m_mean = df_m.drop(columns='sex').mean(axis=0).sort_values(ascending=False)
+df_f_mean = df_f.drop(columns='sex').mean(axis=0).sort_values(ascending=False)
+
+
+# Compute the difference
+dif_g = df_f_mean - df_m_mean
+dif_g_sorted = dif_g.sort_values(ascending=False)
+dif_g_sorted
+
+print(dif_g_sorted)
+
+# Check if 'sex' column exists
+if 'sex' in user_movie_matrix.columns:
+    print("Column 'sex' exists in the DataFrame.")
+else:
+    print("Column 'sex' does not exist in the DataFrame. Current columns are:", user_movie_matrix.columns)
+
+# Inspect the first few rows of the DataFrame
+print(user_movie_matrix.head())
 
 
 
